@@ -1,101 +1,131 @@
-const history =
-document.getElementById("history");
-const display = document.getElementById("display");
+const greeting = document.getElementById("greeting");
 
-const buttons = document.querySelectorAll("button");
+function updateGreeting(){
 
-buttons.forEach(button => {
+    const hour = new Date().getHours();
 
-    button.addEventListener("click", () => {
+    if(hour >= 5 && hour < 12){
 
-        const value = button.innerText;
+        greeting.innerHTML = "🌅 Good Morning";
 
-        if (value === "C") {
+    }
+    else if(hour >= 12 && hour < 17){
 
-            display.value = "";
+        greeting.innerHTML = "☀️ Good Afternoon";
 
-        }
+    }
+    else if(hour >= 17 && hour < 20){
 
-        else if (value === "⌫") {
+        greeting.innerHTML = "🌇 Good Evening";
 
-            display.value = display.value.slice(0, -1);
+    }
+    else{
 
-        }
+        greeting.innerHTML = "🌙 Good Night";
 
-        else if (value === "=") {
-
-            try {
-
-               const expression = display.value;
-
-const answer = eval(expression);
-
-display.value = answer;
-
-history.innerHTML +=
-`<li>${expression} = ${answer}</li>`;
-            }
-
-            catch {
-
-                display.value = "Error";
-
-            }
-
-        }
-else if(value === "%"){
-
-    display.value =
-    Number(display.value)/100;
+    }
 
 }
-        else {
 
-            display.value += value;
+updateGreeting();
+const button = document.getElementById("submitBtn");
+const input = document.getElementById("username");
 
-        }
+button.addEventListener("click", () => {
 
-    });
+    const name = input.value.trim();
+
+    if(name === ""){
+        alert("Please enter your name.");
+        input.focus();
+        return;
+    }
+
+    localStorage.setItem("userName", name);
+    fetch("/save-user", {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+        name: name
+    })
+})
+.then(res => res.json())
+.then(data => {
+    console.log(data);
+});
+
+    button.disabled = true;
+    button.innerHTML = `
+        <span class="spinner"></span>
+        Loading...
+    `;
+
+    setTimeout(() => {
+
+        // Button واپس Normal
+        button.innerHTML = "Continue";
+        button.disabled = false;
+
+        // Popup میں User کا Name
+        document.getElementById("welcomeUser").innerHTML =
+        "✅ Welcome, " + name + "!";
+
+        // Popup Show
+        document.getElementById("successPopup").style.display = "flex";
+
+        // 1.5 سیکنڈ بعد Portfolio
+    setTimeout(() => {
+
+       if (
+    window.location.hostname === "localhost" ||
+    window.location.hostname === "127.0.0.1"
+) {
+    // Express Server
+    window.location.href = "/index.html";
+} else {
+    // GitHub Pages
+    window.location.href = "../Public/index.html";
+}
+
+        }, 2000);
+
+    }, 1000);
 
 });
-// Keyboard Support
+function updateDateTime(){
 
-document.addEventListener("keydown", function(event){
+    const now = new Date();
 
-    const key = event.key;
+    // Time
+    const time = now.toLocaleTimeString("en-US",{
+        hour:"2-digit",
+        minute:"2-digit",
+        second:"2-digit"
+    });
 
-    if(
-        "0123456789+-*/.".includes(key)
-    ){
-        display.value += key;
-    }
+    // Date
+    const date = now.toLocaleDateString("en-US",{
+        weekday:"long",
+        day:"numeric",
+        month:"long",
+        year:"numeric"
+    });
 
-    else if(key === "Enter"){
+    document.getElementById("clock").innerHTML = "🕒 " + time;
+    document.getElementById("date").innerHTML = "📅 " + date;
+}
 
-        event.preventDefault();
+updateDateTime();
 
-        try{
-            display.value = eval(display.value);
-        }
+setInterval(updateDateTime,1000);
+input.addEventListener("keypress",function(e){
 
-        catch{
+if(e.key==="Enter"){
 
-            display.value = "Error";
-        }
+button.click();
 
-    }
-
-    else if(key === "Backspace"){
-
-        display.value =
-        display.value.slice(0,-1);
-
-    }
-
-    else if(key === "Escape"){
-
-        display.value = "";
-
-    }
+}
 
 });

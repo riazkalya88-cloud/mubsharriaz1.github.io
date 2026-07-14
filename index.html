@@ -1,61 +1,71 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculator | Mubshar</title>
+    <link rel="icon" type="image/png" href="/images/favicon.png">
+    <title>Welcome</title>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-    <button id="mode">
-🌙
-</button>
-<div class="history">
 
-<h3>History</h3>
+<div class="container">
 
-<ul id="history"></ul>
+    <div class="box">
+        <img src="MRKk.png.png" alt="Mubshar" class="profile-img">
+
+<h1 id="greeting"></h1>
+
+<p class="subtitle">
+Enter your name to continue to my portfolio.
+</p>
+
+
+      
+
+       <div class="input-box">
+
+<i class="fa-solid fa-user"></i>
+
+<input
+type="text"
+id="username"
+placeholder="Your Name">
 
 </div>
-    <div class="calculator">
+<button id="submitBtn">Continue</button>
+<div id="successPopup" class="success-popup">
 
-        <input type="text" id="display" readonly>
+    <div class="popup-content">
 
-        <div class="buttons">
+        <h2 id="welcomeUser"></h2>
 
-            <button>C</button>
-            <button>⌫</button>
-            <button>%</button>
-            <button>/</button>
-
-            <button>7</button>
-            <button>8</button>
-            <button>9</button>
-            <button>*</button>
-
-            <button>4</button>
-            <button>5</button>
-            <button>6</button>
-            <button>-</button>
-
-            <button>1</button>
-            <button>2</button>
-            <button>3</button>
-            <button>+</button>
-
-            <button>0</button>
-            <button>.</button>
-            <button>=</button>
-
-        </div>
+        <p>Loading Portfolio...</p>
 
     </div>
 
-    <script src="script.js"></script>
+</div>
+
+<div class="time-box">
+    <div id="clock"></div>
+    <div id="date"></div>
+</div>
+        <p id="message"></p>
+
+   <div>
+
+<div class="copyright-box">
+    <span>© 2026 Mubshar Riaz Kalya</span>
+</div>
+</body>
+<script src="script.js"></script>
 
 </body>
-
 </html>
